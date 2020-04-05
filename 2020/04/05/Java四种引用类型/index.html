@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="强引用内存空间不足时，抛出OOM错误，使程序异常终止。 软引用SoftReference如果一个对象只具有软引用，则内存空间充足时，垃圾回收器就不会回收它；如果内存空间不足了，就会回收这些对象的内存。   软引用对内存敏感，所以多可用于缓存  1234&#x2F;&#x2F; 软引用的Bitmap对象SoftReference&lt;Bitmap&gt; softBitmap &#x3D; new SoftReference&amp;">
+<meta name="description" content="总结Java强、软、弱、虚四种引用类型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java四种引用类型">
 <meta property="og:url" content="https://hao2eng.github.io/2020/04/05/Java%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/index.html">
 <meta property="og:site_name" content="hao2eng&#39;s Blog">
-<meta property="og:description" content="强引用内存空间不足时，抛出OOM错误，使程序异常终止。 软引用SoftReference如果一个对象只具有软引用，则内存空间充足时，垃圾回收器就不会回收它；如果内存空间不足了，就会回收这些对象的内存。   软引用对内存敏感，所以多可用于缓存  1234&#x2F;&#x2F; 软引用的Bitmap对象SoftReference&lt;Bitmap&gt; softBitmap &#x3D; new SoftReference&amp;">
+<meta property="og:description" content="总结Java强、软、弱、虚四种引用类型">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-05T13:26:46.000Z">
-<meta property="article:modified_time" content="2020-04-05T14:06:53.674Z">
+<meta property="article:modified_time" content="2020-04-05T14:11:49.043Z">
 <meta property="article:author" content="hao2eng">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -342,7 +342,9 @@
       
 
       
-        <h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2><p>内存空间不足时，抛出OOM错误，使程序异常终止。</p>
+        <p>总结Java强、软、弱、虚四种引用类型</p>
+<a id="more"></a>
+<h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2><p>内存空间不足时，抛出OOM错误，使程序异常终止。</p>
 <h2 id="软引用SoftReference"><a href="#软引用SoftReference" class="headerlink" title="软引用SoftReference"></a>软引用SoftReference</h2><p>如果一个对象只具有软引用，则内存空间充足时，垃圾回收器就不会回收它；如果内存空间不足了，就会回收这些对象的内存。 </p>
 <ul>
 <li>软引用对内存敏感，所以多可用于缓存</li>
