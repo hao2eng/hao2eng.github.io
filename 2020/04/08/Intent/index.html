@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Intent是Android用于组件间通信的对象。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intent">
+<meta property="og:url" content="https://hao2eng.github.io/2020/04/08/Intent/index.html">
+<meta property="og:site_name" content="hao2eng&#39;s Blog">
+<meta property="og:description" content="Intent是Android用于组件间通信的对象。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-08T13:47:30.000Z">
+<meta property="article:modified_time" content="2020-04-08T13:52:28.332Z">
+<meta property="article:author" content="hao2eng">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hao2eng.github.io/2020/04/08/Intent/"/>
+
+
+
+
+
+  <title>Intent | hao2eng's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hao2eng's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hao2eng.github.io/2020/04/08/Intent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hao2eng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hao2eng's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Intent</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-08T21:47:30+08:00">
+                2020-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Intent是Android用于组件间通信的对象。</p>
+<a id="more"></a>
+<h2 id="基本用例"><a href="#基本用例" class="headerlink" title="基本用例"></a>基本用例</h2><ol>
+<li>启动Activity<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivity</span><span class="params">(Intent intent)</span></span></span><br></pre></td></tr></table></figure></li>
+<li>启动服务<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ComponentName <span class="title">startService</span><span class="params">(Intent service)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">bindService</span><span class="params">(Intent service, ServiceConnection conn,<span class="keyword">int</span> flags)</span></span></span><br></pre></td></tr></table></figure></li>
+<li>传递广播<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendBroadcast</span><span class="params">(Intent intent)</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Intent主要信息"><a href="#Intent主要信息" class="headerlink" title="Intent主要信息"></a>Intent主要信息</h2><ul>
+<li>组件名称、操作、数据和类别表示 Intent 的既定特征,这些属性，Android 系统能够解析应当启动哪个应用组件。</li>
+<li>Extra传递给目标组件的数据信息</li>
+</ul>
+<h3 id="组件名称"><a href="#组件名称" class="headerlink" title="组件名称"></a>组件名称</h3><p>为可选项，当指定组件名称时，Intent为显示Intent,仅传递给由组件名称定义的应用组件。<br>对应Intent中的mComponent字段.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造方法中指定</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>,SecondActivity<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"><span class="comment">//其他指定方式</span></span><br><span class="line">intent.setComponent(TestService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">intent.setClass(<span class="keyword">this</span>,TestService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">intent.setClassName(<span class="string">"com.example"</span>,<span class="string">"TestService"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>指定要执行的通用操作的字符串。</p>
+<ol>
+<li>常见操作：<ul>
+<li>ACTION_VIEW：如果您拥有一些某项 Activity 可向用户显示的信息，请通过 Intent 将此操作与 startActivity() 结合使用。   </li>
+</ul>
+</li>
+<li>自定义Action确保加入应用的软件包名称作为前缀<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> String ACTION_CUSTOM = <span class="string">"com.example.action.CUSTOM"</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3>设置 URI 和 MIME 类型<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置URI</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@NonNull</span> <span class="function">Intent <span class="title">setData</span><span class="params">(@Nullable Uri data)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 设置MIME类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> @NonNull Intent <span class="title">setType</span><span class="params">(@Nullable String type)</span></span></span><br><span class="line"><span class="function"><span class="comment">//始终使用 setDataAndType() 同时设置URI和 MIME 类型。</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> @NonNull Intent <span class="title">setDataAndType</span><span class="params">(@Nullable Uri data, @Nullable String type)</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="类别Category"><a href="#类别Category" class="headerlink" title="类别Category"></a>类别Category</h3><p>一个包含应处理 Intent 组件类型的附加信息的字符串。大多数 Intent 均不需要类别。常见类别：</p>
+<ul>
+<li>CATEGORY_BROWSABLE:目标 Activity 允许本身通过网络浏览器启动，以显示链接引用的数据，如图像或电子邮件。</li>
+<li>CATEGORY_LAUNCHER: 该 Activity 是任务的初始 Activity，在系统的应用启动器中列出。<br>可以通过addCategory 添加类别<h3 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h3>携带的Bundle数据。<br>通过putExtra() 或putExtras() 将数据添加到Intent中<h3 id="标志"><a href="#标志" class="headerlink" title="标志"></a>标志</h3>使用setFlags添加标志，可用于指示系统如何打开Activity，比如设置Activity的启动模式等<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2>Intent包括显示与隐式两种类型</li>
+</ul>
+<h3 id="显示Intent"><a href="#显示Intent" class="headerlink" title="显示Intent"></a>显示Intent</h3><p>通过提供目标应用的软件包名称或完全限定的组件类名来指定可处理 Intent 的应用。通常用于启动应用本身其他组件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent downloadIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, DownloadService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">downloadIntent.setData(Uri.parse(fileUrl));</span><br><span class="line">startService(downloadIntent);</span><br></pre></td></tr></table></figure>
+<h3 id="隐式-Intent"><a href="#隐式-Intent" class="headerlink" title="隐式 Intent"></a>隐式 Intent</h3><p>不会指定特定的组件，而是声明要执行的常规操作，从而允许其他应用中的组件来处理。 </p>
+<ol>
+<li>可能没有任何应用处理发送的隐式 Intent，因此需要使用resolveActivity先进行可达性判断<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sendIntent.resolveActivity(getPackageManager()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">    startActivity(sendIntent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>系统存在多个能匹配的应用时，会弹出选择框，并可以设置默认接收应用。</li>
+<li>如果需要总是弹出选择器,使用Intent.createChooser包裹原intent即可<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Intent sendIntent = <span class="keyword">new</span> Intent(Intent.ACTION_SEND);</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">String title = getResources().getString(R.string.chooser_title);</span><br><span class="line"><span class="comment">// Create intent to show the chooser dialog</span></span><br><span class="line">Intent chooser = Intent.createChooser(sendIntent, title);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (sendIntent.resolveActivity(getPackageManager()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">    startActivity(chooser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>隐式Intent过程</li>
+</ol>
+<ul>
+<li>Activity A 创建包含操作描述的 Intent，并将其传递给 startActivity()</li>
+<li>Android 系统搜索所有应用中与 Intent 匹配的 Intent 过滤器。</li>
+<li>找到匹配项之后,该系统通过调用匹配Activity B的 onCreate()方法并将其传递给Intent以此启动匹配 Activity。</li>
+</ul>
+<h2 id="隐式Intent接收"><a href="#隐式Intent接收" class="headerlink" title="隐式Intent接收"></a>隐式Intent接收</h2><p>清单文件中声明组件时使用<intent-filter>标签声明过滤器，可以声明多个过滤器，当其中一个匹配即可。</p>
+<ol>
+<li>过滤器有<action>、<category>、<data>三个标签，也是对应了Intent中的三种信息<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">"ShareActivity"</span>&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=<span class="string">"android.intent.action.SEND"</span>/&gt;</span><br><span class="line">        &lt;category android:name=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span><br><span class="line">        &lt;data android:mimeType=<span class="string">"text/plain"</span>/&gt;</span><br><span class="line">    &lt;<span class="regexp">/intent-filter&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>activity&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果必须确保只有您自己的应用才能启动您的某一组件，请勿在清单中声明 Intent 过滤器。而是将该组件的 exported 属性设置为 “false”。</li>
+<li>为了避免无意中运行不同应用的 Service，始终使用显式 Intent 启动您自己的服务</li>
+<li>要接收隐式 Intent，必须将 CATEGORY_DEFAULT 类别包括在 Intent 过滤器中。</li>
+</ol>
+<h3 id="data"><a href="#data" class="headerlink" title="data"></a>data</h3><p>指定URI（scheme、host、port、path）这里的scheme与host只能为小写，否则接收不了.浏览器中拉起应用操作多是需要指定此data.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test://aaa.com/aa</span></span><br><span class="line">&lt;data android:scheme=<span class="string">"test"</span></span><br><span class="line">android:host=<span class="string">"aaa.com"</span></span><br><span class="line">android:path=<span class="string">"aa"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/05/Java%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/" rel="next" title="Java四种引用类型">
+                <i class="fa fa-chevron-left"></i> Java四种引用类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="hao2eng" />
+            
+              <p class="site-author-name" itemprop="name">hao2eng</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用例"><span class="nav-number">1.</span> <span class="nav-text">基本用例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent主要信息"><span class="nav-number">2.</span> <span class="nav-text">Intent主要信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组件名称"><span class="nav-number">2.1.</span> <span class="nav-text">组件名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">2.2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据"><span class="nav-number">2.3.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类别Category"><span class="nav-number">2.4.</span> <span class="nav-text">类别Category</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extra"><span class="nav-number">2.5.</span> <span class="nav-text">Extra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标志"><span class="nav-number">2.6.</span> <span class="nav-text">标志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型"><span class="nav-number">3.</span> <span class="nav-text">类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显示Intent"><span class="nav-number">3.1.</span> <span class="nav-text">显示Intent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式-Intent"><span class="nav-number">3.2.</span> <span class="nav-text">隐式 Intent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐式Intent接收"><span class="nav-number">4.</span> <span class="nav-text">隐式Intent接收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data"><span class="nav-number">4.1.</span> <span class="nav-text">data</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hao2eng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
